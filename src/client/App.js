@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import {HashRouter, Route, Link} from 'react-router-dom';
 import axios from 'axios';
 import User from './User';
 import CreateUser from './CreateUser';
@@ -9,7 +9,7 @@ import './app.css';
 
 const App = () => {
   return(
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Link to={'/create-user'}>
           <button type="button">
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/edit-user/:id" component={EditUser}/>
         <Route path="/create-user" component={CreateUser}/>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
