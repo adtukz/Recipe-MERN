@@ -80,7 +80,3 @@ server.put('/api/users', (req, res) => {
     return res.send({ success: true });
   });
 });
-
-server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist',  'index.html'));
-});
