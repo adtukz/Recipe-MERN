@@ -262,3 +262,10 @@ heroku config:set MONGODB_URL=mongodb+srv://username:password@mongo-url/your-db?
 ```
 
 7. Your app should not be available at https://your-app-name.heroku.com. For example, this sample project has been deployed at https://mern-users-example.herokuapp.com/.
+8. To deploy an updated version of your application
+
+```bash
+git add .
+git commit -am "first commit"
+git push heroku master
+```
