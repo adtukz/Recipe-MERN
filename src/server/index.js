@@ -22,7 +22,7 @@ MongoClient.connect(dbRoute, (err, client) => {
   db.collection('Users').find().toArray((err, result) => {
     if (err) throw err;
 
-    console.log(result);
+    console.log(__dirname);
   });
   // start the express web server listening on 8080
   server.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
