@@ -20,7 +20,7 @@ MongoClient.connect(dbRoute, (err, client) => {
   db = client.db('MyMongoDB');
 
   // start the express web server listening on 8080
-  server.listen(process.env.PORT || 8080, () => console.log('Listening!'));
+  server.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
 });
 
 // bodyParser, parses the request body to be a readable json format
@@ -74,5 +74,4 @@ server.put('/api/users', (req, res) => {
     console.log('updated in database');
     return res.send({ success: true });
   });
-
 });
