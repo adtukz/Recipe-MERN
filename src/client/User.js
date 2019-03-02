@@ -2,27 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-
-// Component to represent a single User 'Card' (note: this is a class component so can use state)
-// Classes used below are from Bulma, see index.html above
+// Component to represent a single User 'Card'
+// note that the edit button navigates to a new URL (which will load a new Component via React Router)
+// whereas the delete button invokes a function in the parent Component
 class User extends React.Component {
 
-  // Define what happens when this componet gets drawn on the UI
+  // define what happens when this componet gets drawn on the UI
   render() {
     return (
-      <div className="column is-3">
-        <div className="card">
-          <div className="card-image">
-            <figure className="image is-4by3">
+      <div>
+        <div>
+          <div>
+            <figure>
               <img alt="Profile" src={this.props.image} />
             </figure>
           </div>
-          <div className="card-content">
-            <div className="media">
-              <div className="media-content">
-                <p className="title is-4">{this.props.name}</p>
-                <p className="subtitle">{this.props.nat}</p>
-
+          <div>
+            <div>
+              <div>
+                <p>{this.props.name}</p>
                 <button type="button" onClick={() => {this.props.handleDelete(this.props.id);}}>
                   Delete
                 </button>
@@ -40,5 +38,4 @@ class User extends React.Component {
   }
 }
 
-// Allow this to be imported by another JS file
 export default User;
