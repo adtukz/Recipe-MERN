@@ -9,8 +9,7 @@ const server = express();
 server.use(express.static('dist'));
 
 // URL to our DB
-const dbRouteLocal = 'mongodb://localhost:27017/MyMongoDB';
-const dbRoute = 'mongodb+srv://mongouser:iadtajs@cluster0-qecqg.mongodb.net/MyMongoDB?retryWrites=true';
+const dbRoute = process.env.MONGODB_URL || 'mongodb://localhost:27017/MyMongoDB';
 
 // connect to the db and start the express server
 let db;
