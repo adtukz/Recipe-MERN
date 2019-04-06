@@ -4,7 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 
 const server = express();
-const dbname = 'MyMongoDB'; // change to match your database name
+const dbname = 'recipeDB'; // change to match your database name
 
 // serve files from the dist directory
 server.use(express.static('dist'));
@@ -39,6 +39,16 @@ server.get('/api/users', (req, res) => {
   });
 });
 
+// retrieve all user objects from DB
+server.get('/api/recipes', (req, res) => {
+  db.collection('recipes').find().toArray((err, result) => {
+    if (err) throw err;
+
+    console.log(result);
+    res.send(result);
+  });
+});
+
 // retrieve user with specific ID from DB
 server.get('/api/users/:id', (req, res) => {
   db.collection('users').findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
@@ -59,9 +69,29 @@ server.delete('/api/users', (req, res) => {
   });
 });
 
+// delete user with specific ID from DB
+server.delete('/api/recipes', (req, res) => {
+  db.collection('recipes').deleteOne( {_id: new ObjectID(req.body.id) }, err => {
+    if (err) return res.send(err);
+
+    console.log('deleted from database');
+    return res.send({ success: true });
+  });
+});
+
 // create new user based on info supplied in request body
 server.post('/api/users', (req, res) => {
   db.collection('users').insertOne(req.body, (err, result) => {
+    if (err) throw err;
+
+    console.log('created in database');
+    res.redirect('/');
+  });
+});
+
+// create new recipe based on info supplied in request body
+server.post('/api/recipe', (req, res) => {
+  db.collection('recipes').insertOne(req.body, (err, result) => {
     if (err) throw err;
 
     console.log('created in database');
