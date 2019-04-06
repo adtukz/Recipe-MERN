@@ -1,7 +1,7 @@
 {
-  "name": "mern-full-stack",
+  "name": "recipe-mern",
   "version": "1.0.0",
-  "description": "Demo Full Stack MongoDB, Express, React & Node",
+  "description": "Recipe app mern",
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "echo Skip build on Heroku"
   },
-  "author": "Andrew Errity",
+  "author": "Andrew Dunne",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
