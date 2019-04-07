@@ -4,7 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 
 const server = express();
-const dbname = 'recipeDB'; // change to match your database name
+const dbname = 'heroku_43nn2z2x'; // change to match your database name
 
 // serve files from the dist directory
 server.use(express.static('dist'));
