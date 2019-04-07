@@ -4,13 +4,13 @@ const ObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 
 const server = express();
-const dbname = 'recipeDB'; // change to match your database name
+const dbname = 'recipeDB';
 
 // serve files from the dist directory
 server.use(express.static('dist'));
 
 // URL to our DB - will be loaded from an env variable or will use local DB
-const dbroute = process.env.MONGODB_URL || `mongodb://localhost:27017/${dbname}`;
+const dbroute = `mongodb+srv://andrew:andrew1@cluster0-pb4ix.mongodb.net/test?retryWrites=true` || `mongodb://localhost:27017/${dbname}`;
 
 let db;
 
