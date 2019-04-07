@@ -12,7 +12,7 @@ class Recipe extends React.Component {
     return (
       <tr>
         <th> {this.props.num} </th>
-        <th> {this.props.label} </th>
+        <td> {this.props.label} </td>
         <td> {this.props.calories} </td>
         <td> {this.props.serves} </td>
         <td> <a href={this.props.url}> link </a> </td>

@@ -64,7 +64,8 @@ class RecipeList extends Component {
     ));
 
     return (
-      <div className="columns is-multiline is-centered">
+      <div>
+      <br />
         <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <thead>
             <tr>
