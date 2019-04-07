@@ -49,26 +49,49 @@ class RecipeList extends Component {
 
   render() {
     // for each user object, produce a User Component
-    const recipeList = this.state.recipes.map(r => (
+    const recipeList = this.state.recipes.map((r, i) => (
       <Recipe
         key={r._id}
+        num = {i + 1}
         id={r._id}
-        label={r.label}
-        img={r.img}
         label={r.label}
         calories={r.calories}
         serves={r.serves}
-        ingredients={r.ingredients}
-        dietLabels={r.dietLabels}
-        healthLabels={r.healthLabels}
-        url={this.url}
+        url={r.url}
+        date={r.date}
         handleDelete={this.handleDelete}
       />
     ));
 
     return (
       <div className="columns is-multiline is-centered">
-        {recipeList}
+        <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th> # </th>
+              <th> Title </th>
+              <th> Calories </th>
+              <th> Servings </th>
+              <th> Link </th>
+              <th> Date Added </th>
+              <th> Delete </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th> # </th>
+              <th> Title </th>
+              <th> Calories </th>
+              <th> Servings </th>
+              <th> Link </th>
+              <th> Date Added </th>
+              <th> Delete </th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {recipeList}
+          </tbody>
+        </table>
       </div>
     );
   }

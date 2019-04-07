@@ -44,6 +44,10 @@ class RecipeCard extends React.Component {
     let currentDietLabels = this.props.currentRecipe.recipe.dietLabels;
     let currentHealthLabels = this.props.currentRecipe.recipe.healthLabels;
     let currentUrl = this.props.currentRecipe.recipe.url;
+    let currentDay = new Date().getDate();
+    let currentMonth = new Date().getMonth() + 1;
+    let currentYear = new Date().getFullYear();
+    let currentDate = currentDay + "/" + currentMonth + "/" + currentYear;
 
     this.setState({
       fullRecipe: false,
@@ -54,7 +58,8 @@ class RecipeCard extends React.Component {
       ingredients: currentIngredients,
       dietLabels: currentDietLabels,
       healthLabels: currentHealthLabels,
-      url: currentUrl
+      url: currentUrl,
+      date: currentDate
     }, function() {
       axios.post('/api/recipe', this.state)
         .then(res => console.log("Saved Recipe")) // if successful go to home
@@ -87,7 +92,7 @@ class RecipeCard extends React.Component {
                   <p className="subtitle calStyle">Contains {(Math.round(currentRecipe.recipe.calories/currentRecipe.recipe.yield))} calories per serving.</p>
                   <p className="subtitle calStyle">Serves {currentRecipe.recipe.yield} people.</p>
                   <form onSubmit={this.saveRecipe}>
-                    <input type="submit" value="Save"/>
+                    <input className="button" type="submit" value="Save"/>
                   </form>
                 </div>
               </div>
