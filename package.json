@@ -46,5 +46,8 @@
     "clean-webpack-plugin": "^1.0.0",
     "html-webpack-plugin": "^3.2.0"
   },
+  "engines": {
+    "node": "8.12.0"
+  },
   "heroku-run-build-script": true
 }
