@@ -4,13 +4,13 @@ const ObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 
 const server = express();
-const dbname = 'recipeDB';
+const dbname = 'recipeDB'; // change to match your database name
 
 // serve files from the dist directory
 server.use(express.static('dist'));
 
 // URL to our DB - will be loaded from an env variable or will use local DB
-const dbroute = process.env.MONGODB_URL;
+const dbroute = process.env.MONGODB_URL || `mongodb://localhost:27017/${dbname}`;
 
 let db;
 
@@ -20,7 +20,7 @@ MongoClient.connect(dbroute, (err, client) => {
 
   db = client.db(dbname);
   // start the express web server listening
-  server.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}!`));
+  server.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
 });
 
 // bodyParser, parses the request body to be a readable json format
