@@ -1,7 +1,7 @@
 import React from 'react';
 import RecipeCard from './RecipeCard';
 
-class Recipes extends React.Component {
+class SearchRecipe extends React.Component {
   render() {
     const recipeList = this.props.recipes.map((r, i) => (
       <RecipeCard
@@ -20,4 +20,4 @@ class Recipes extends React.Component {
     );
   }
 }
-export default Recipes;
+export default SearchRecipe;

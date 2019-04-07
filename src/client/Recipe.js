@@ -11,7 +11,7 @@ class Recipe extends React.Component {
   render() {
     return (
       <div className="column is-4">
-        <div class="recipe">
+        <div className="recipe">
           <div className="card-title titleStyle">
             <h2>{this.props.label} </h2>
           </div>

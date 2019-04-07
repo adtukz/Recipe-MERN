@@ -1,8 +1,5 @@
 import React from 'react';
 import { HashRouter, Route, Link } from 'react-router-dom';
-import CreateUser from './CreateUser';
-import EditUser from './EditUser';
-import UserList from './UserList';
 import About from './About.js';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeList from './RecipeList.js';
@@ -26,7 +23,7 @@ const App = () => {
               About
             </Link>
 
-            <Link to="/Recipes" className="navbar-item">
+            <Link to="/" className="navbar-item">
               Search
             </Link>
 
@@ -36,9 +33,8 @@ const App = () => {
 
           </div>
         </nav>
-        <Route exact path="/" component={UserList}/>
+        <Route exact path="/" component={RecipeSearch} />
         <Route path="/About/" component={About} />
-        <Route path="/Recipes/" component={RecipeSearch} />
         <Route path="/RecipesList/" component={RecipeList} />
       </div>
     </HashRouter>

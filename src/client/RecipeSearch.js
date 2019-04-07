@@ -1,5 +1,5 @@
 import React from "react";
-import Recipes from "./Recipes.js";
+import SearchRecipe from "./SearchRecipe.js";
 import axios from "axios";
 
 class RecipeList extends React.Component {
@@ -8,17 +8,14 @@ class RecipeList extends React.Component {
     this.state = {
       search: "",
       recipes: [],
-      balanced: false,
-      highProtein: false,
-      lowFat: false,
-      lowCarb: false,
-      lowSodium: false,
+      dietLabel: "none",
       warning: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleButtons = this.handleButtons.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDietLabel = this.handleDietLabel.bind(this);
     this.submit = this.submit.bind(this);
 
     this.warning = (
@@ -31,51 +28,26 @@ class RecipeList extends React.Component {
   }
 
   submit() {
+
     let ingredient = this.state.search;
-    let diet = [];
     let dietString = "";
 
-    if(this.state.balanced) {
-      diet.push("balanced");
+    if(this.state.dietLabel !== "none") {
+      dietString = "&diet=" + this.state.dietLabel;
     }
-    if(this.state.highProtein) {
-      diet.push("high-protein");
-    }
-    if(this.state.lowFat) {
-      diet.push("low-fat");
-    }
-    if(this.state.lowCarb) {
-      diet.push("low-carb");
-    }
-    if(this.state.lowSodium) {
-      diet.push("low-sodium");
-    }
-    if(diet.length < 1) {
-      axios
-        .get(
-          `https://api.edamam.com/search?q=${ingredient}&app_id=2d4a708f&app_key=5519d3b7c9291019417c80cffaf82880&from=0&to=50`
-        )
-        .then(response => {
-          this.setState({ recipes: response.data.hits });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } else {
-      for(let i = 0; i < diet.length; i++) {
-        dietString = dietString + "&diet=" + diet[i];
-      }
-      axios
-        .get(
-          `https://api.edamam.com/search?q=${ingredient}${dietString}&app_id=2d4a708f&app_key=5519d3b7c9291019417c80cffaf82880&from=0&to=50`
-        )
-        .then(response => {
-          this.setState({ recipes: response.data.hits });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+
+    let search = ingredient + dietString
+
+    axios
+      .get(
+        `https://api.edamam.com/search?q=${search}&app_id=2d4a708f&app_key=5519d3b7c9291019417c80cffaf82880&from=0&to=50`
+      )
+      .then(response => {
+        this.setState({ recipes: response.data.hits });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleButtons(event) {
@@ -98,6 +70,45 @@ class RecipeList extends React.Component {
     this.submit();
   }
 
+  handleDietLabel(value) {
+
+    this.setState({
+      dietLabel: value
+    });
+
+    let dropitem;
+
+    for(let i = 1; i <= 6; i++) {
+      if(i === 1) {
+        dropitem = this.refs.Drop1;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 2) {
+        dropitem = this.refs.Drop2;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 3) {
+        dropitem = this.refs.Drop3;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 4) {
+        dropitem = this.refs.Drop4;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 5) {
+        dropitem = this.refs.Drop5;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 6) {
+        dropitem = this.refs.Drop6;
+        dropitem.className = "dropdown-item";
+      }
+    }
+
+    event.target.className = "dropdown-item is-active";
+
+  }
+
   render() {
     const style = !this.state.warning ? { display: "none" } : {};
     return (
@@ -117,61 +128,34 @@ class RecipeList extends React.Component {
                 type="text"
                 placeholder="Choose Ingredient..."
               />
-              <div className="checkbox">
-                <label>
-                  <p>Balanced:
-                  <input
-                  name="balanced"
-                  type="checkbox"
-                  onChange={this.handleButtons}
-                  />
-                  </p>
-                </label>
-                <br />
-                <label>
-                  <p>High Protein
-                  <input
-                  name="highProtein"
-                  type="checkbox"
-                  onChange={this.handleButtons}
-                  />
-                  </p>
-                </label>
-                <br />
-                <label>
-                  <p>Low Fat
-                  <input
-                  name="lowFat"
-                  type="checkbox"
-                  onChange={this.handleButtons}
-                  />
-                  </p>
-                </label>
-                <br />
-                <label>
-                  <p>Low Carb
-                  <input
-                  name="lowCarb"
-                  type="checkbox"
-                  onChange={this.handleButtons}
-                  />
-                  </p>
-                </label>
-                <br />
-                <label>
-                  <p>Low Sodium
-                  <input
-                  name="lowSodium"
-                  type="checkbox"
-                  onChange={this.handleButtons}
-                  />
-                  </p>
-                </label>
-              </div>
             </form>
+
+            <br />
+
+            <div className="dropdown is-hoverable">
+            <p> Diet Label: </p>
+              <div className="dropdown-trigger">
+                <button className="button">
+                  <span>{this.state.dietLabel}</span>
+                  <span className="icon is-small">
+                    <i className="fas fa-angle-down"></i>
+                  </span>
+                </button>
+              </div>
+              <div className="dropdown-menu" role="menu">
+                <div className="dropdown-content" ref="dropmenu">
+                  <a onClick={() => this.handleDietLabel("none")} ref="Drop1" id="Drop1" value="none" className="dropdown-item is-active"> None </a>
+                  <a onClick={() => this.handleDietLabel("balanced")} ref="Drop2" id="Drop2" value="balanced" className="dropdown-item"> Balanced </a>
+                  <a onClick={() => this.handleDietLabel("high-protein")} ref="Drop3" id="Drop3" value="highProtein" className="dropdown-item"> High Protein </a>
+                  <a onClick={() => this.handleDietLabel("low-carb")} ref="Drop4" id="Drop4" value="lowCarb" className="dropdown-item"> Low Carb </a>
+                  <a onClick={() => this.handleDietLabel("low-fat")} ref="Drop5" id="Drop5" value="lowFat" className="dropdown-item"> Low Fat </a>
+                  <a onClick={() => this.handleDietLabel("low-sodium")} ref="Drop6" id="Drop6" value="lowSodium" className="dropdown-item"> Low Sodium </a>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="column is-9">
-            <Recipes recipes={this.state.recipes} />
+            <SearchRecipe recipes={this.state.recipes} />
           </div>
         </div>
       </div>

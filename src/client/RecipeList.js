@@ -67,7 +67,7 @@ class RecipeList extends Component {
     ));
 
     return (
-      <div class="columns is-multiline is-centered">
+      <div className="columns is-multiline is-centered">
         {recipeList}
       </div>
     );

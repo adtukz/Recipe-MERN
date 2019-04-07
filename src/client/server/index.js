@@ -30,16 +30,6 @@ server.use(bodyParser.json());
 // define the various endpoints
 
 // retrieve all user objects from DB
-server.get('/api/users', (req, res) => {
-  db.collection('users').find().toArray((err, result) => {
-    if (err) throw err;
-
-    console.log(result);
-    res.send(result);
-  });
-});
-
-// retrieve all user objects from DB
 server.get('/api/recipes', (req, res) => {
   db.collection('recipes').find().toArray((err, result) => {
     if (err) throw err;
@@ -49,9 +39,9 @@ server.get('/api/recipes', (req, res) => {
   });
 });
 
-// retrieve user with specific ID from DB
-server.get('/api/users/:id', (req, res) => {
-  db.collection('users').findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
+// retrieve recipe with specific ID from DB
+server.get('/api/recipes/:id', (req, res) => {
+  db.collection('recipes').findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
     if (err) throw err;
 
     console.log(result);
@@ -59,33 +49,13 @@ server.get('/api/users/:id', (req, res) => {
   });
 });
 
-// delete user with specific ID from DB
-server.delete('/api/users', (req, res) => {
-  db.collection('users').deleteOne( {_id: new ObjectID(req.body.id) }, err => {
-    if (err) return res.send(err);
-
-    console.log('deleted from database');
-    return res.send({ success: true });
-  });
-});
-
-// delete user with specific ID from DB
+// delete recipe with specific ID from DB
 server.delete('/api/recipes', (req, res) => {
   db.collection('recipes').deleteOne( {_id: new ObjectID(req.body.id) }, err => {
     if (err) return res.send(err);
 
     console.log('deleted from database');
     return res.send({ success: true });
-  });
-});
-
-// create new user based on info supplied in request body
-server.post('/api/users', (req, res) => {
-  db.collection('users').insertOne(req.body, (err, result) => {
-    if (err) throw err;
-
-    console.log('created in database');
-    res.redirect('/');
   });
 });
 
@@ -96,20 +66,5 @@ server.post('/api/recipe', (req, res) => {
 
     console.log('created in database');
     res.redirect('/');
-  });
-});
-
-// update user based on info supplied in request body
-server.put('/api/users', (req, res) => {
-  // get the ID of the user to be updated
-  const id  = req.body._id;
-  // remove the ID so as not to overwrite it when updating
-  delete req.body._id;
-  // find a user matching this ID and update their details
-  db.collection('users').updateOne( {_id: new ObjectID(id) }, {$set: req.body}, (err, result) => {
-    if (err) throw err;
-
-    console.log('updated in database');
-    return res.send({ success: true });
   });
 });
