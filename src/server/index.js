@@ -1,33 +1,112 @@
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = require('.models/User');
+const withAuth = require('/middleware.js');
 
 const server = express();
+
 const dbname = 'heroku_43nn2z2x'; // change to match your database name
 
-// serve files from the dist directory
-server.use(express.static('dist'));
+const secret = 'secret_should_not_be_in_git';
+
+server.use(bodyParser.urlencoded({extended:false}));
+server.use(bodyParser.json());
+server.use(cookierParser());
 
 // URL to our DB - will be loaded from an env variable or will use local DB
-const dbroute = process.env.MONGODB_URL || `mongodb://localhost:27017/${dbname}`;
-
-let db;
-
-// connect to the db and start the express server
-MongoClient.connect(dbroute, (err, client) => {
-  if (err) throw err;
-
-  db = client.db(dbname);
-  // start the express web server listening
-  server.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+const mongo_uri = 'mongodb://localhost/react-auth';
+mongoose.connect(mongo_uri, { useNewUrlParser: true}, function(err) {
+  if (err) {
+    throw err;
+  } else {
+    console.log(`Successfully connected to ${mongo_uri}`)
+  }
 });
+
+server.use(express.static(path.join(__dirname, 'public')));
 
 // bodyParser, parses the request body to be a readable json format
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
 // define the various endpoints
+
+server.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+server.get('/api/about', function(req, res) {
+  res.send('Welcome!');
+});
+
+server.get('/api/secret', withAuth, function(req, res) {
+  res.send('This is a secret page');
+});
+
+server.post('/api/register', function(req, res) {
+  const { email, password } = req.body;
+  const user = new User({ email, password });
+  user.save(function(err) {
+    if (err) {
+      console.log(err);
+      res.status(500).send('Error registering new user please try again.');
+    } else {
+      res.status(200).send('Welcome to the club!');
+    }
+  });
+});
+
+server.post('/api/authenticate', function(req, res) {
+  const { email, password } = req.body;
+  User.findOne({ email }, function(err, user) {
+    if (err) {
+      console.error(err);
+      res.status(500)
+        .json({
+          error: 'Internal error please try again'
+        });
+    } else if (!user) {
+      res.status(401)
+        .json({
+          error: 'Incorrect email or password'
+        });
+    } else {
+      user.isCorrectPassword(password, function(err, same) {
+        if (err) {
+          res.status(500)
+            .json({
+              error: 'Internal error please try again'
+            });
+        } else if (!same) {
+          res.status(401)
+            .json({
+              error: 'Incorrect email or password'
+            });
+        } else {
+          // Issue token
+          const payload = { email };
+          const token = jwt.sign(payload, secret, {
+            expiresIn: '1h'
+          });
+          res.cookie('token', token, { httpOnly: true }).sendStatus(200);
+        }
+      });
+    }
+  });
+});
+
+server.get('/api/checkToken', withAuth, function(req, res) {
+  res.sendStatus(200);
+});
+
+server.get('/api/logout', withAuth, function(req, res) {
+  res.cookie('token', '', { httpOnly: true }).sendStatus(200);;
+});
 
 // retrieve all user objects from DB
 server.get('/api/recipes', (req, res) => {
@@ -84,3 +163,5 @@ server.post('/api/recipe', (req, res) => {
     res.redirect('/');
   });
 });
+
+server.listen(process.env.PORT || 8080);

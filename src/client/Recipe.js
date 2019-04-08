@@ -85,6 +85,7 @@ class Recipe extends React.Component {
         <td>
           <p onClick={this.editComment} style={styleComment}> {this.state.comment} </p>
           <form style={styleSearch}>
+            <p>
             <div class="columns">
               <div class="column is-9">
                 <input
@@ -101,6 +102,7 @@ class Recipe extends React.Component {
                 </button>
               </div>
             </div>
+            </p>
           </form>
         </td>
         <td> <p> {this.props.calories} </p> </td>
