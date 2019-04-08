@@ -221,6 +221,8 @@ class RecipeList extends React.Component {
 
             </div>
 
+            <br />
+
             <div className="dropdown is-hoverable">
             <p> Calories: </p>
               <div className="dropdown-trigger">
