@@ -10,7 +10,7 @@ const dbname = 'recipeDB'; // change to match your database name
 server.use(express.static('dist'));
 
 // URL to our DB - will be loaded from an env variable or will use local DB
-const dbroute = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbname}`;
+const dbroute = process.env.MONGODB_URL || `mongodb://localhost:27017/${dbname}`;
 
 let db;
 
