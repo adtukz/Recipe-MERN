@@ -52,7 +52,7 @@ class RecipeList extends Component {
     axios.put('api/recipes', {
         data: {
           comment: recipeComment,
-          _id: recipeId
+          id: recipeId
         }
       })
       .then(response => {
