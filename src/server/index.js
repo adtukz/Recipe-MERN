@@ -39,9 +39,8 @@ server.get('/api/recipes', (req, res) => {
   });
 });
 
-// retrieve recipe with specific ID from DB
 server.get('/api/recipes/:id', (req, res) => {
-  db.collection('recipes').findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
+  Recipe.findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
     if (err) throw err;
 
     console.log(result);
@@ -55,6 +54,21 @@ server.delete('/api/recipes', (req, res) => {
     if (err) return res.send(err);
 
     console.log('deleted from database');
+    return res.send({ success: true });
+  });
+});
+
+// update user based on info supplied in request body
+server.put('/api/recipes', (req, res) => {
+  // get the ID of the user to be updated
+  const id  = req.body._id;
+  // remove the ID so as not to overwrite it when updating
+  delete req.body._id;
+  // find a user matching this ID and update their details
+  db.collection('recipes').updateOne( {_id: new ObjectID(id) }, {$set: {comment: req.body.comment}}, (err, result) => {
+    if (err) throw err;
+
+    console.log('updated in database');
     return res.send({ success: true });
   });
 });

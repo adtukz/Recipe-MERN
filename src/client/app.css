@@ -75,7 +75,10 @@ p {
 
 .recipe {
   background:#dcdde1;
-  border-radius:10px;
+}
+
+.imgStyle {
+    width:90%;
 }
 
 .navbar-image {

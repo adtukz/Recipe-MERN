@@ -7,6 +7,11 @@ class RecipeCard extends React.Component {
     super(props);
     this.state = {
       fullRecipe: false,
+      width: {
+        width: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      },
       img: "",
       label: "",
       calories: "",
@@ -14,7 +19,8 @@ class RecipeCard extends React.Component {
       ingredients: "",
       dietLabels: "",
       healthLabels: "",
-      url: ""
+      url: "",
+      comment: "Click to add comment"
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -50,7 +56,6 @@ class RecipeCard extends React.Component {
     let currentDate = currentDay + "/" + currentMonth + "/" + currentYear;
 
     this.setState({
-      fullRecipe: false,
       img: currentImage,
       label: currentLabel,
       calories: currentCalories,
@@ -59,7 +64,8 @@ class RecipeCard extends React.Component {
       dietLabels: currentDietLabels,
       healthLabels: currentHealthLabels,
       url: currentUrl,
-      date: currentDate
+      date: currentDate,
+      comment: this.state.comment
     }, function() {
       axios.post('/api/recipe', this.state)
         .then(res => console.log("Saved Recipe")) // if successful go to home
@@ -74,6 +80,7 @@ class RecipeCard extends React.Component {
 
   render() {
     const currentRecipe = this.props.currentRecipe;
+
     if(!this.state.fullRecipe){
       return (
         <div className="column is-4">
@@ -82,7 +89,7 @@ class RecipeCard extends React.Component {
             <div className="card-title titleStyle"> {currentRecipe.recipe.label} </div>
             <div className="card-image">
               <figure className="image is-4by3">
-                <img alt='Profile'  className='imgStyle' src={currentRecipe.recipe.image}></img>
+                <img alt='Profile'  className='imgStyle'  style={this.state.width} src={currentRecipe.recipe.image}></img>
               </figure>
             </div>
             </span>
@@ -92,7 +99,7 @@ class RecipeCard extends React.Component {
                   <p className="subtitle calStyle">Contains {(Math.round(currentRecipe.recipe.calories/currentRecipe.recipe.yield))} calories per serving.</p>
                   <p className="subtitle calStyle">Serves {currentRecipe.recipe.yield} people.</p>
                   <form onSubmit={this.saveRecipe}>
-                    <input className="button" type="submit" value="Save"/>
+                    <input className="button is-primary is-fullwidth" type="submit" value="Save"/>
                   </form>
                 </div>
               </div>

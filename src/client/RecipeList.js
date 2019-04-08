@@ -12,6 +12,7 @@ class RecipeList extends Component {
 
     this.updateRecipes= this.updateRecipes.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.updateComment = this.updateComment.bind(this);
   }
 
   componentDidMount() {
@@ -32,9 +33,25 @@ class RecipeList extends Component {
 
   handleDelete(recipeId) {
     // make a DELETE request to the server to remove the user with this userId
-    axios
-      .delete('api/recipes', {
+    axios.delete('api/recipes', {
         data: {
+          id: recipeId
+        }
+      })
+      .then(response => {
+        // if delete was successful, re-fetch the list of users, will trigger a re-render
+        this.updateRecipes();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  updateComment(recipeId, recipeComment) {
+    // make a UPDATE request to the server to update the recipe with this userId
+    axios.put('api/recipes', {
+        data: {
+          comment: recipeComment,
           id: recipeId
         }
       })
@@ -54,12 +71,18 @@ class RecipeList extends Component {
         key={r._id}
         num = {i + 1}
         id={r._id}
+        img={r.img}
         label={r.label}
         calories={r.calories}
         serves={r.serves}
+        ingredients={r.ingredients}
+        dietLabels={r.dietLabels}
+        healthLabels={r.healthLabels}
         url={r.url}
         date={r.date}
+        comment={r.comment}
         handleDelete={this.handleDelete}
+        updateComment={this.updateComment}
       />
     ));
 
@@ -71,6 +94,7 @@ class RecipeList extends Component {
             <tr>
               <th> # </th>
               <th> Title </th>
+              <th> Comment </th>
               <th> Calories </th>
               <th> Servings </th>
               <th> Link </th>
@@ -82,6 +106,7 @@ class RecipeList extends Component {
             <tr>
               <th> # </th>
               <th> Title </th>
+              <th> Comment </th>
               <th> Calories </th>
               <th> Servings </th>
               <th> Link </th>

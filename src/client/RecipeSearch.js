@@ -19,9 +19,12 @@ class RecipeList extends React.Component {
     this.submit = this.submit.bind(this);
 
     this.warning = (
-      <div className="column is-4">
+      <div className="column is-12">
         <p>
           Please enter an ingredient you would like to cook with.
+        </p>
+        <p>
+          The current search is "chicken".
         </p>
       </div>
     );
@@ -48,6 +51,21 @@ class RecipeList extends React.Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  componentDidMount() {
+
+    axios
+      .get(
+        `https://api.edamam.com/search?q=chicken&app_id=2d4a708f&app_key=5519d3b7c9291019417c80cffaf82880&from=0&to=50`
+      )
+      .then(response => {
+        this.setState({ recipes: response.data.hits });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
   }
 
   handleButtons(event) {
@@ -113,12 +131,11 @@ class RecipeList extends React.Component {
     const style = !this.state.warning ? { display: "none" } : {};
     return (
       <div>
-        <div className="text column is-centered" style={style}>
-          {this.warning}
-        </div>
-
         <div className="columns is-centered searchBar">
           <div className="column is-3">
+          <div className="text column is-centered" style={style}>
+            {this.warning}
+          </div>
             <form onSubmit={this.handleSubmit}>
               <h2>Enter Ingredient Below:</h2>
               <input
@@ -129,7 +146,7 @@ class RecipeList extends React.Component {
                 placeholder="Choose Ingredient..."
               />
             </form>
-
+            <h4> Press Enter </h4>
             <br />
 
             <div className="dropdown is-hoverable">
