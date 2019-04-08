@@ -54,7 +54,7 @@ class Recipe extends React.Component {
       url: this.props.url,
       date: this.props.date,
       comment: currentComment
-    }, => () {
+    }, () => {
       this.props.updateComment(this.state);
     });
 
