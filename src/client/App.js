@@ -1,15 +1,13 @@
 import React from 'react';
-import { HashRouter, Route, Link, Switch } from 'react-router-dom';
+import { HashRouter, Route, Link } from 'react-router-dom';
 import About from './About.js';
-import Secret from './Secret';
-import Login from './Login';
-import Register from './Register';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeList from './RecipeList.js';
 import recipeLogo from "./images/recipeLogo.png";
 import './app.css';
 
 // 'main' Component. Sets up the React Router and respective routes
+<<<<<<< HEAD
 class App extends React.Component {
   constructor() {
     super();
@@ -38,11 +36,21 @@ class App extends React.Component {
         <nav className="navbar" role="navigation">
           <div className="navbar-brand">
           <Link to="/">
+=======
+const App = () => {
+  return(
+    <HashRouter>
+      <div>
+        <nav className="navbar" role="navigation">
+          <div className="navbar-brand">
+          <Link to="/About">
+>>>>>>> parent of ceb1218... login state
             <img src={recipeLogo} alt="" className="navbar-image"/>
           </Link>
           </div>
           <div className="navbar-menu">
 
+<<<<<<< HEAD
           {!this.state.loggedIn && <Link className="navbar-item" to="/login">Login</Link>}
           {!this.state.loggedIn && <Link className="navbar-item" to="/register">Register</Link>}
           <Link className="navbar-item" to="/">Home</Link>
@@ -69,5 +77,28 @@ class App extends React.Component {
     );
   }
 }
+=======
+            <Link to="/About/" className="navbar-item">
+              About
+            </Link>
+
+            <Link to="/" className="navbar-item">
+              Search
+            </Link>
+
+            <Link to="/RecipesList" className="navbar-item">
+              Saved Recipes
+            </Link>
+
+          </div>
+        </nav>
+        <Route exact path="/" component={RecipeSearch} />
+        <Route path="/About/" component={About} />
+        <Route path="/RecipesList/" component={RecipeList} />
+      </div>
+    </HashRouter>
+  );
+};
+>>>>>>> parent of ceb1218... login state
 
 export default App;
