@@ -1,12 +1,12 @@
-const express = require('express');
 const ObjectID = require('mongodb').ObjectID;
+const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = require('./models/User.js');
-const withAuth = require('./middleware.js');
+const User = require('./models/User');
+const withAuth = require('./middleware');
 
 const server = express();
 
@@ -18,8 +18,10 @@ server.use(bodyParser.urlencoded({extended:false}));
 server.use(bodyParser.json());
 server.use(cookieParser());
 
+server.use(express.static('dist'));
+
 // URL to our DB - will be loaded from an env variable or will use local DB
-const mongo_uri = 'mongodb://localhost/react-auth';
+const mongo_uri = 'mongodb://localhost/recipes';
 mongoose.connect(mongo_uri, { useNewUrlParser: true}, function(err) {
   if (err) {
     throw err;
@@ -27,12 +29,6 @@ mongoose.connect(mongo_uri, { useNewUrlParser: true}, function(err) {
     console.log(`Successfully connected to ${mongo_uri}`)
   }
 });
-
-server.use(express.static(path.join(__dirname, 'public')));
-
-// bodyParser, parses the request body to be a readable json format
-server.use(bodyParser.urlencoded({ extended: false }));
-server.use(bodyParser.json());
 
 // define the various endpoints
 
