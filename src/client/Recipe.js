@@ -80,8 +80,8 @@ class Recipe extends React.Component {
     const styleSearch = !this.state.styleSearch ? { display: "none" } : {};
     return (
       <tr>
-        <th> {this.props.num} </th>
-        <td> {this.props.label} </td>
+        <th> <p> {this.props.num} </p> </th>
+        <td> <p> {this.props.label} </p> </td>
         <td>
           <p onClick={this.editComment} style={styleComment}> {this.state.comment} </p>
           <form style={styleSearch}>
@@ -105,10 +105,10 @@ class Recipe extends React.Component {
             </p>
           </form>
         </td>
-        <td> {this.props.calories} </td>
-        <td> {this.props.serves} </td>
-        <td> <a href={this.props.url}> link </a> </td>
-        <td> {this.props.date} </td>
+        <td> <p> {this.props.calories} </p> </td>
+        <td> <p> {this.props.serves} </p> </td>
+        <td> <p> <a href={this.props.url}> link </a> </p> </td>
+        <td> <p> {this.props.date} </p> </td>
         <td>
           <button className="button is-danger is-fullwidth" type="button" onClick={() => {this.props.handleDelete(this.props.id);}}>
             Delete
