@@ -2,6 +2,7 @@ import React from 'react';
 import RecipeCard from './RecipeCard';
 
 class SearchRecipe extends React.Component {
+
   render() {
     const recipeList = this.props.recipes.map((r, i) => (
       <RecipeCard

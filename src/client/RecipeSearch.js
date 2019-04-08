@@ -9,13 +9,13 @@ class RecipeList extends React.Component {
       search: "",
       recipes: [],
       dietLabel: "none",
+      caloriesDropdown: "none",
       warning: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleButtons = this.handleButtons.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDietLabel = this.handleDietLabel.bind(this);
     this.submit = this.submit.bind(this);
 
     this.warning = (
@@ -34,12 +34,17 @@ class RecipeList extends React.Component {
 
     let ingredient = this.state.search;
     let dietString = "";
+    let caloriesString = "";
 
     if(this.state.dietLabel !== "none") {
       dietString = "&diet=" + this.state.dietLabel;
     }
 
-    let search = ingredient + dietString
+    if(this.state.caloriesDropdown != "none") {
+      caloriesString = "&calories=" + this.state.caloriesDropdown;
+    }
+
+    let search = ingredient + dietString + caloriesString
 
     axios
       .get(
@@ -127,6 +132,49 @@ class RecipeList extends React.Component {
 
   }
 
+  calories(value) {
+
+    this.setState({
+      caloriesDropdown: value
+    });
+
+    let dropitem;
+
+    for(let i = 1; i <= 7; i++) {
+      if(i === 1) {
+        dropitem = this.refs.DropCalories1;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 2) {
+        dropitem = this.refs.DropCalories2;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 3) {
+        dropitem = this.refs.DropCalories3;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 4) {
+        dropitem = this.refs.DropCalories4;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 5) {
+        dropitem = this.refs.DropCalories5;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 6) {
+        dropitem = this.refs.DropCalories6;
+        dropitem.className = "dropdown-item";
+      }
+      if(i === 7) {
+        dropitem = this.refs.DropCalories7;
+        dropitem.className = "dropdown-item";
+      }
+    }
+
+    event.target.className = "dropdown-item is-active";
+
+  }
+
   render() {
     const style = !this.state.warning ? { display: "none" } : {};
     return (
@@ -159,6 +207,7 @@ class RecipeList extends React.Component {
                   </span>
                 </button>
               </div>
+
               <div className="dropdown-menu" role="menu">
                 <div className="dropdown-content" ref="dropmenu">
                   <a onClick={() => this.handleDietLabel("none")} ref="Drop1" id="Drop1" value="none" className="dropdown-item is-active"> None </a>
@@ -169,6 +218,32 @@ class RecipeList extends React.Component {
                   <a onClick={() => this.handleDietLabel("low-sodium")} ref="Drop6" id="Drop6" value="lowSodium" className="dropdown-item"> Low Sodium </a>
                 </div>
               </div>
+
+            </div>
+
+            <div className="dropdown is-hoverable">
+            <p> Calories: </p>
+              <div className="dropdown-trigger">
+                <button className="button">
+                  <span>{this.state.caloriesDropdown}</span>
+                  <span className="icon is-small">
+                    <i className="fas fa-angle-down"></i>
+                  </span>
+                </button>
+              </div>
+
+              <div className="dropdown-menu" role="menu">
+                <div className="dropdown-content" ref="dropmenuCalories">
+                  <a onClick={() => this.calories("none")} ref="DropCalories1" id="DropCalories1" value="none" className="dropdown-item is-active"> None </a>
+                  <a onClick={() => this.calories("0-200")} ref="DropCalories2" id="DropCalories2" value="0-200" className="dropdown-item"> 0-200 </a>
+                  <a onClick={() => this.calories("200-400")} ref="DropCalories3" id="DropCalories3" value="200-400" className="dropdown-item"> 200-400 </a>
+                  <a onClick={() => this.calories("400-600")} ref="DropCalories4" id="DropCalories4" value="400-600" className="dropdown-item"> 400-600 </a>
+                  <a onClick={() => this.calories("600-800")} ref="DropCalories5" id="DropCalories5" value="600-800" className="dropdown-item"> 600-800 </a>
+                  <a onClick={() => this.calories("800-1000")} ref="DropCalories6" id="DropCalories6" value="800-1000" className="dropdown-item"> 800-1000 </a>
+                  <a onClick={() => this.calories("1000+")} ref="DropCalories7" id="DropCalories7" value="1000+" className="dropdown-item"> 1000+ </a>
+                </div>
+              </div>
+
             </div>
           </div>
           <div className="column is-9">

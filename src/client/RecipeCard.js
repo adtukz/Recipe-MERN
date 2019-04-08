@@ -7,6 +7,7 @@ class RecipeCard extends React.Component {
     super(props);
     this.state = {
       fullRecipe: false,
+      hideCard: false,
       width: {
         width: '90%',
         marginLeft: 'auto',
@@ -75,14 +76,14 @@ class RecipeCard extends React.Component {
     }
     );
 
-    delete this.props;
+    this.state.hideCard = true;
 
   }
 
   render() {
     const currentRecipe = this.props.currentRecipe;
 
-    if(!this.state.fullRecipe){
+    if(!this.state.fullRecipe && !this.state.hideCard){
       return (
         <div className="column is-4">
           <div className="recipe">
@@ -108,7 +109,7 @@ class RecipeCard extends React.Component {
           </div>
         </div>
       );
-    } else if (this.state.fullRecipe) {
+    } else if (this.state.fullRecipe && !this.state.hideCard) {
       return (
         <div className="column is-8 recipe">
           <div className="columns">
@@ -139,8 +140,11 @@ class RecipeCard extends React.Component {
           </div>
         </div>
       );
+    } else {
+      return (
+        <div></div>
+      );
     }
-
   }
 }
 

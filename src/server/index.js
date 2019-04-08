@@ -29,18 +29,9 @@ server.use(bodyParser.json());
 
 // define the various endpoints
 
-// retrieve all user objects from DB
+// retrieve all recipe objects from DB
 server.get('/api/recipes', (req, res) => {
   db.collection('recipes').find().toArray((err, result) => {
-    if (err) throw err;
-
-    console.log(result);
-    res.send(result);
-  });
-});
-
-server.get('/api/recipes/:id', (req, res) => {
-  Recipe.findOne({_id: new ObjectID(req.params.id) }, (err, result) => {
     if (err) throw err;
 
     console.log(result);
@@ -58,15 +49,15 @@ server.delete('/api/recipes', (req, res) => {
   });
 });
 
-// update user based on info supplied in request body
+// update recipe based on info supplied in request body
 server.put('/api/recipes', (req, res) => {
 
-  // get the ID of the user to be updated
+  // get the ID of the recipe to be updated
   const id  = req.body._id;
   // remove the ID so as not to overwrite it when updating
   delete req.body._id;
 
-  // find a user matching this ID and update their details
+  // find a recipe matching this ID and update their details
   db.collection('recipes').updateOne( {_id: new ObjectID(id) }, {$set: req.body}, (err, result) => {
     if (err) throw err;
 
