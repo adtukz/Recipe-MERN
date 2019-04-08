@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = require('.models/User');
-const withAuth = require('/middleware.js');
+const User = require('./models/User.js');
+const withAuth = require('./middleware.js');
 
 const server = express();
 
@@ -16,7 +16,7 @@ const secret = 'secret_should_not_be_in_git';
 
 server.use(bodyParser.urlencoded({extended:false}));
 server.use(bodyParser.json());
-server.use(cookierParser());
+server.use(cookieParser());
 
 // URL to our DB - will be loaded from an env variable or will use local DB
 const mongo_uri = 'mongodb://localhost/react-auth';

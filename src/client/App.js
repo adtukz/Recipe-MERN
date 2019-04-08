@@ -10,7 +10,7 @@ import recipeLogo from "./images/recipeLogo.png";
 import './app.css';
 
 // 'main' Component. Sets up the React Router and respective routes
-class App extends Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {loggedIn: false};
@@ -33,38 +33,41 @@ class App extends Component {
   }
 
   render(){
-    <div>
-      <nav className="navbar" role="navigation">
-        <div className="navbar-brand">
-        <Link to="/About">
-          <img src={recipeLogo} alt="" className="navbar-image"/>
-        </Link>
-        </div>
-        <div className="navbar-menu">
+    return (
+      <div>
+        <nav className="navbar" role="navigation">
+          <div className="navbar-brand">
+          <Link to="/">
+            <img src={recipeLogo} alt="" className="navbar-image"/>
+          </Link>
+          </div>
+          <div className="navbar-menu">
 
-        <Link to="/">Home</Link>
-        <Link to="/secret">Secret</Link>
-        {!this.state.loggedIn && <Link to="/login">Login</Link>}
-        {!this.state.loggedIn && <Link to="/register">Register</Link>}
-        {this.state.loggedIn && <Link to="/RecipeSearch">Recipe Search</Link>}
-        {this.state.loggedIn && <Link to="/RecipeList">Recipe List</Link>}
+          {!this.state.loggedIn && <Link className="navbar-item" to="/login">Login</Link>}
+          {!this.state.loggedIn && <Link className="navbar-item" to="/register">Register</Link>}
+          <Link className="navbar-item" to="/">Home</Link>
+          <Link className="navbar-item" to="/secret">Secret</Link>
+          {this.state.loggedIn && <Link className="navbar-item" to="/RecipeSearch">Recipe Search</Link>}
+          {this.state.loggedIn && <Link className="navbar-item" to="/RecipeList">Recipe List</Link>}
 
-        </div>
+          </div>
 
-        <div className="navbar-end">
-          {this.state.loggedIn && <Link to="/logout">Logout</Link>}
-        </div>
+          <div className="navbar-end">
+            {this.state.loggedIn && <Link className="navbar-item" to="/logout">Logout</Link>}
+          </div>
 
-      </nav>
-      <Switch>
-        <Route path="/RecipeSearch" component={RecipeSearch} />
-        <Route exact path="/" component={About}/>
-        <Route path="/RecipesList/" component={RecipeList} />
-        <Route path="/login" render={(props) => <Login {...props} handleLogin={this.login} />} />
-        <Route path="/logout" render={this.logout}/>
-      </Switch>
-    </div>
+        </nav>
+        <Switch>
+          <Route path="/RecipeSearch" component={RecipeSearch} />
+          <Route exact path="/" component={About}/>
+          <Route path="/RecipesList/" component={RecipeList} />
+          <Route path="/login" render={(props) => <Login {...props} handleLogin={this.login} />} />
+          <Route path="/logout" render={this.logout}/>
+          <Route path="/register" component={Register} />
+        </Switch>
+      </div>
+    );
   }
-};
+}
 
 export default App;
