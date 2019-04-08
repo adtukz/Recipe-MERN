@@ -52,6 +52,8 @@ class Recipe extends React.Component {
 
     let currentComment = this.state.comment;
 
+    console.log(this.state);
+
     this.props.updateComment(this.state);
 
     this.setState({
