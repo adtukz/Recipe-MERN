@@ -85,8 +85,8 @@ class Recipe extends React.Component {
         <td>
           <p onClick={this.editComment} style={styleComment}> {this.state.comment} </p>
           <form style={styleSearch}>
-            <div class="columns">
-              <div class="column is-9">
+            <div className="columns">
+              <div className="column is-9">
                 <input
                   className="input"
                   value={this.state.comment}
@@ -95,7 +95,7 @@ class Recipe extends React.Component {
                   placeholder="Enter Comment..."
                 />
               </div>
-              <div class="column is-3">
+              <div className="column is-3">
                 <button className="button is-primary" onClick={this.submitComment} type="button" >
                   Save Comment
                 </button>
