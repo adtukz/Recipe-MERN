@@ -7,7 +7,7 @@ import './app.css';
 class RecipeList extends Component {
   constructor(props) {
     super(props);
-    // store the array of users in state
+    // store the array of recipes in state
     this.state = { recipes: [] };
 
     this.updateRecipes= this.updateRecipes.bind(this);
@@ -16,12 +16,12 @@ class RecipeList extends Component {
   }
 
   componentDidMount() {
-    // when the component mounts, fetch the user data from the server
+    // when the component mounts, fetch the recipe data from the server
     this.updateRecipes();
   }
 
   updateRecipes() {
-    // make a GET request to the server for the user data, store it in state
+    // make a GET request to the server for the recipe data, store it in state
     axios.get('api/recipes')
       .then(response => {
         this.setState({ recipes: response.data });
@@ -32,14 +32,14 @@ class RecipeList extends Component {
   }
 
   handleDelete(recipeId) {
-    // make a DELETE request to the server to remove the user with this userId
+    // make a DELETE request to the server to remove the recipe with this recipeId
     axios.delete('api/recipes', {
         data: {
           id: recipeId
         }
       })
       .then(response => {
-        // if delete was successful, re-fetch the list of users, will trigger a re-render
+        // if delete was successful, re-fetch the list of recipes, will trigger a re-render
         this.updateRecipes();
       })
       .catch(error => {
@@ -48,10 +48,10 @@ class RecipeList extends Component {
   }
 
   updateComment(recipe) {
-    // make a UPDATE request to the server to update the recipe with this userId
+    // make a UPDATE request to the server to update the recipe with this recipeId
     axios.put('api/recipes', recipe)
       .then(response => {
-        // if delete was successful, re-fetch the list of users, will trigger a re-render
+        // if delete was successful, re-fetch the list of recipes, will trigger a re-render
         this.updateRecipes();
       })
       .catch(error => {
@@ -60,7 +60,7 @@ class RecipeList extends Component {
   }
 
   render() {
-    // for each user object, produce a User Component
+    // for each recipe object, produce a recipe Component
     const recipeList = this.state.recipes.map((r, i) => (
       <Recipe
         key={r._id}
