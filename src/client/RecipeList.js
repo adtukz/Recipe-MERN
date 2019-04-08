@@ -89,7 +89,7 @@ class RecipeList extends Component {
             <tr>
               <th> # </th>
               <th> Title </th>
-              <th> Comment </th>
+              <th> Comment (click on a comment to change it) </th>
               <th> Calories </th>
               <th> Servings </th>
               <th> Link </th>
@@ -101,7 +101,7 @@ class RecipeList extends Component {
             <tr>
               <th> # </th>
               <th> Title </th>
-              <th> Comment </th>
+              <th> Comment (click on a comment to change it) </th>
               <th> Calories </th>
               <th> Servings </th>
               <th> Link </th>

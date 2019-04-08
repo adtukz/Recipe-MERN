@@ -85,16 +85,22 @@ class Recipe extends React.Component {
         <td>
           <p onClick={this.editComment} style={styleComment}> {this.state.comment} </p>
           <form style={styleSearch}>
-            <input
-              className="input"
-              value={this.state.comment}
-              onChange={this.handleChange}
-              type="text"
-              placeholder="Enter Comment..."
-            />
-            <button className="button is-primary" onClick={this.submitComment} type="button" >
-              Save Comment
-            </button>
+            <div class="columns">
+              <div class="column is-9">
+                <input
+                  className="input"
+                  value={this.state.comment}
+                  onChange={this.handleChange}
+                  type="text"
+                  placeholder="Enter Comment..."
+                />
+              </div>
+              <div class="column is-3">
+                <button className="button is-primary" onClick={this.submitComment} type="button" >
+                  Save Comment
+                </button>
+              </div>
+            </div>
           </form>
         </td>
         <td> {this.props.calories} </td>
