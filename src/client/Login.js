@@ -45,6 +45,7 @@ export default class Login extends Component {
       <form onSubmit={this.onSubmit}>
         <h1>Login Below!</h1>
         <input
+          className="input"
           type="email"
           name="email"
           placeholder="Enter email"
@@ -53,6 +54,7 @@ export default class Login extends Component {
           required
         />
         <input
+          className="input"
           type="password"
           name="password"
           placeholder="Enter password"
@@ -60,7 +62,7 @@ export default class Login extends Component {
           onChange={this.handleInputChange}
           required
         />
-        <input type="submit" value="Submit"/>
+        <input className="button is-primary" type="submit" value="Submit"/>
       </form>
     );
   }

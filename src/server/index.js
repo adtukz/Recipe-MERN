@@ -40,7 +40,7 @@ server.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-server.get('/api/about', function(req, res) {
+server.get('/api/', function(req, res) {
   res.send('Welcome!');
 });
 
