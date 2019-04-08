@@ -75,6 +75,7 @@ class RecipeCard extends React.Component {
     }
     );
 
+    delete this.props;
 
   }
 
