@@ -65,9 +65,9 @@ server.put('/api/recipes', (req, res) => {
   const id  = req.body._id;
   // remove the ID so as not to overwrite it when updating
   delete req.body._id;
-  
+
   // find a user matching this ID and update their details
-  db.collection('recipes').updateOne( {_id: new ObjectID(req.body._id) }, {$set: req.body}, (err, result) => {
+  db.collection('recipes').updateOne( {_id: new ObjectID(id) }, {$set: req.body}, (err, result) => {
     if (err) throw err;
 
     console.log('updated in database');
