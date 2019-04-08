@@ -47,14 +47,9 @@ class RecipeList extends Component {
       });
   }
 
-  updateComment(recipeId, recipeComment) {
+  updateComment(recipe) {
     // make a UPDATE request to the server to update the recipe with this userId
-    axios.put('api/recipes', {
-        data: {
-          comment: recipeComment,
-          id: recipeId
-        }
-      })
+    axios.put('api/recipes', recipe)
       .then(response => {
         // if delete was successful, re-fetch the list of users, will trigger a re-render
         this.updateRecipes();

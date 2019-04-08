@@ -33,6 +33,15 @@ class Recipe extends React.Component {
 
     this.setState({
       _id: this.props.id,
+      img: this.props.img,
+      label: this.props.label,
+      calories: this.props.calories,
+      serves: this.props.serves,
+      ingredients: this.props.ingredients,
+      dietLabels: this.props.dietLabels,
+      healthLabels: this.props.healthLabels,
+      url: this.props.url,
+      date: this.props.date,
       comment: event.target.value
     });
 
@@ -41,9 +50,9 @@ class Recipe extends React.Component {
   submitComment(event) {
     event.preventDefault();
 
-    this.props.updateComment(this.props.id, this.state.comment);
-
     let currentComment = this.state.comment;
+
+    this.props.updateComment(this.state);
 
     this.setState({
       comment: currentComment,
